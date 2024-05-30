@@ -119,7 +119,7 @@ class Logger(Configurable):
     def args(self, parameters=None):
         if parameters is None:
             with open(os.path.join(self.log_dir, self.ARGS_FILE_NAME), 'rt') as reader:
-                return yaml.load(reader.read())
+                return yaml.load(reader.read(), Loader=yaml.SafeLoader)
         with open(os.path.join(self.log_dir, self.ARGS_FILE_NAME), 'wt') as writer:
             yaml.dump(parameters.dump(), writer)
 
