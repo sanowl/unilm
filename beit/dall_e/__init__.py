@@ -1,14 +1,11 @@
-import io, requests
+import io
 import torch
 import torch.nn as nn
-
-from dall_e.encoder import Encoder
-from dall_e.decoder import Decoder
-from dall_e.utils   import map_pixels, unmap_pixels
+from security import safe_requests
 
 def load_model(path: str, device: torch.device = None) -> nn.Module:
     if path.startswith('http://') or path.startswith('https://'):
-        resp = requests.get(path)
+        resp = safe_requests.get(path)
         resp.raise_for_status()
             
         with io.BytesIO(resp.content) as buf:
