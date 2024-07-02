@@ -1,4 +1,3 @@
-import pickle
 import math
 import argparse
 import glob
@@ -7,15 +6,16 @@ from tqdm import tqdm
 import unicodedata
 
 from pytorch_pretrained_bert.tokenization import BertTokenizer
+import fickling
 
 
 def read_traces_from_file(file_name):
     with open(file_name, "rb") as fin:
-        meta = pickle.load(fin)
+        meta = fickling.load(fin)
         num_samples = meta["num_samples"]
         samples = []
         for _ in range(num_samples):
-            samples.append(pickle.load(fin))
+            samples.append(fickling.load(fin))
     return samples
 
 

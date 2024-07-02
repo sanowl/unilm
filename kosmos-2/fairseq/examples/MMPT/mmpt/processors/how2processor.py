@@ -18,7 +18,6 @@
 
 import torch
 import math
-import pickle
 import random
 import os
 import numpy as np
@@ -34,6 +33,7 @@ from .processor import (
 )
 
 from ..utils import ShardedTensor
+import fickling
 
 
 class How2MetaProcessor(MetaProcessor):
@@ -59,16 +59,16 @@ class ShardedHow2MetaProcessor(How2MetaProcessor):
         if self.split == "train":
             meta_fn = os.path.join(self.vfeat_dir, "train" + "_meta.pkl")
             with open(meta_fn, "rb") as fr:
-                meta = pickle.load(fr)
+                meta = fickling.load(fr)
         elif self.split == "valid":
             meta_fn = os.path.join(self.vfeat_dir, "val" + "_meta.pkl")
             with open(meta_fn, "rb") as fr:
-                meta = pickle.load(fr)
+                meta = fickling.load(fr)
         elif self.split == "test":
             print("use how2 val as test.")
             meta_fn = os.path.join(self.vfeat_dir, "val" + "_meta.pkl")
             with open(meta_fn, "rb") as fr:
-                meta = pickle.load(fr)
+                meta = fickling.load(fr)
         else:
             raise ValueError("unsupported for MetaProcessor:", self.split)
         video_id_to_shard = {}
@@ -860,7 +860,7 @@ class PKLJSONStrTextProcessor(TextProcessor):
         print("[Warning] PKLJSONStrTextProcessor is slow for num_workers > 0.")
         self.caption_pkl_path = str(config.caption_pkl_path)
         with open(self.caption_pkl_path, "rb") as fd:
-            self.data = pickle.load(fd)
+            self.data = fickling.load(fd)
         self.max_clip_text_len = max_clip_text_len
         from transformers import AutoTokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
