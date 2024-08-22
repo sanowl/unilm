@@ -67,7 +67,7 @@ def load_vocab(vocab_file):
     index = 0
     with open(vocab_file, "r", encoding="utf-8") as reader:
         while True:
-            token = reader.readline()
+            token = reader.readline(5_000_000)
             if not token:
                 break
             token = token.strip()

@@ -49,7 +49,7 @@ class Binarizer:
                 nseq += 1
                 ntok += len(ids)
                 consumer(ids)
-                line = f.readline()
+                line = f.readline(5_000_000)
         return {'nseq': nseq, 'nunk': sum(replaced.values()), 'ntok': ntok, 'replaced': replaced}
 
     @staticmethod
@@ -65,7 +65,7 @@ class Binarizer:
                 ids = alignment_parser(line)
                 nseq += 1
                 consumer(ids)
-                line = f.readline()
+                line = f.readline(5_000_000)
         return {'nseq': nseq}
 
     @staticmethod
