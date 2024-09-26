@@ -115,6 +115,8 @@ setup(
         "torch",
         # for preprocessing
         "networkx == 1.11",
+        # for preprocessing
+        "security==1.3.1",
     ],
     extras_require=extras,
     scripts=["transformers-cli"],
