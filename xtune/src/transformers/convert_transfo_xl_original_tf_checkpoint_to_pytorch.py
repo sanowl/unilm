@@ -18,7 +18,6 @@
 import argparse
 import logging
 import os
-import pickle
 import sys
 
 import torch
@@ -32,6 +31,7 @@ from transformers import (
     load_tf_weights_in_transfo_xl,
 )
 from transformers.tokenization_transfo_xl import CORPUS_NAME, VOCAB_FILES_NAMES
+import fickling
 
 
 logging.basicConfig(level=logging.INFO)
@@ -50,7 +50,7 @@ def convert_transfo_xl_checkpoint_to_pytorch(
     if transfo_xl_dataset_file:
         # Convert a pre-processed corpus (see original TensorFlow repo)
         with open(transfo_xl_dataset_file, "rb") as fp:
-            corpus = pickle.load(fp, encoding="latin1")
+            corpus = fickling.load(fp, encoding="latin1")
         # Save vocabulary and dataset cache as Dictionaries (should be better than pickles for the long-term)
         pytorch_vocab_dump_path = pytorch_dump_folder_path + "/" + VOCAB_FILES_NAMES["pretrained_vocab_file"]
         print("Save vocabulary to {}".format(pytorch_vocab_dump_path))

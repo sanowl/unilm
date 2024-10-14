@@ -1,4 +1,3 @@
-import pickle
 import math
 import argparse
 import glob
@@ -10,6 +9,7 @@ import unicodedata
 from transformers import BertTokenizer, RobertaTokenizer, XLMRobertaTokenizer
 from s2s_ft.tokenization_unilm import UnilmTokenizer
 from s2s_ft.tokenization_minilm import MinilmTokenizer
+import fickling
 
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
@@ -29,11 +29,11 @@ TOKENIZER_CLASSES = {
 
 def read_traces_from_file(file_name):
     with open(file_name, "rb") as fin:
-        meta = pickle.load(fin)
+        meta = fickling.load(fin)
         num_samples = meta["num_samples"]
         samples = []
         for _ in range(num_samples):
-            samples.append(pickle.load(fin))
+            samples.append(fickling.load(fin))
     return samples
 
 

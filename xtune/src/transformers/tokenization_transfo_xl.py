@@ -21,7 +21,6 @@
 import glob
 import logging
 import os
-import pickle
 import re
 from collections import Counter, OrderedDict
 from typing import List, Optional, Tuple, Union
@@ -36,6 +35,7 @@ from tokenizers.processors import BertProcessing
 
 from .file_utils import cached_path, is_torch_available
 from .tokenization_utils import PreTrainedTokenizer, PreTrainedTokenizerFast
+import fickling
 
 
 if is_torch_available():
@@ -744,7 +744,7 @@ def get_lm_corpus(datadir, dataset):
     elif os.path.exists(fn):
         logger.info("Loading cached dataset from pickle...")
         with open(fn, "rb") as fp:
-            corpus = pickle.load(fp)
+            corpus = fickling.load(fp)
     else:
         logger.info("Producing dataset {}...".format(dataset))
         kwargs = {}
