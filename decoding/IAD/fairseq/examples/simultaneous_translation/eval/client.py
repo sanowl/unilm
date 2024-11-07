@@ -29,7 +29,7 @@ class SimulSTEvaluationService(object):
         url = f"{self.base_url}"
 
         try:
-            _ = requests.post(url)
+            _ = requests.post(url, timeout=60)
         except Exception as e:
             print(f"Failed to start an evaluation session: {e}")
 
@@ -40,7 +40,7 @@ class SimulSTEvaluationService(object):
         # end eval session
         url = f"{self.base_url}/result"
         try:
-            r = requests.get(url)
+            r = requests.get(url, timeout=60)
             print("Scores: {}".format(r.json()))
             print("Evaluation session finished.")
         except Exception as e:
@@ -53,7 +53,7 @@ class SimulSTEvaluationService(object):
             for key in extra_params.keys():
                 params[key] = extra_params[key]
         try:
-            r = requests.get(url, params=params)
+            r = requests.get(url, params=params, timeout=60)
         except Exception as e:
             print(f"Failed to request a source segment: {e}")
         return r.json()
@@ -63,14 +63,14 @@ class SimulSTEvaluationService(object):
         params = {"sent_id": sent_id}
 
         try:
-            requests.put(url, params=params, data=hypo.encode("utf-8"))
+            requests.put(url, params=params, data=hypo.encode("utf-8"), timeout=60)
         except Exception as e:
             print(f"Failed to send a translated segment: {e}")
 
     def corpus_info(self):
         url = f"{self.base_url}"
         try:
-            r = requests.get(url)
+            r = requests.get(url, timeout=60)
         except Exception as e:
             print(f"Failed to request corpus information: {e}")
 

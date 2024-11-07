@@ -8,7 +8,7 @@ from dall_e.utils   import map_pixels, unmap_pixels
 
 def load_model(path: str, device: torch.device = None) -> nn.Module:
     if path.startswith('http://') or path.startswith('https://'):
-        resp = requests.get(path)
+        resp = requests.get(path, timeout=60)
         resp.raise_for_status()
             
         with io.BytesIO(resp.content) as buf:

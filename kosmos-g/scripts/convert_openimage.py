@@ -246,7 +246,7 @@ class OpenImageDataset(Dataset):
     def __getitem__(self, idx):
         try:
             items = self.data[idx].split(',')
-            image = Image.open(requests.get(items[2], stream=True).raw).convert('RGB')
+            image = Image.open(requests.get(items[2], stream=True, timeout=60).raw).convert('RGB')
             # caption
             width, height = image.size
             shortest_side = min(width, height)

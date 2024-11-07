@@ -359,7 +359,7 @@ def http_get(url, temp_file, proxies=None, resume_size=0, user_agent=None):
     headers = {"user-agent": ua}
     if resume_size > 0:
         headers["Range"] = "bytes=%d-" % (resume_size,)
-    response = requests.get(url, stream=True, proxies=proxies, headers=headers)
+    response = requests.get(url, stream=True, proxies=proxies, headers=headers, timeout=60)
     if response.status_code == 416:  # Range not satisfiable
         return
     content_length = response.headers.get("Content-Length")

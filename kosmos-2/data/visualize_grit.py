@@ -31,7 +31,7 @@ def download_images_from_jsonl(jsonl_path, output_folder):
   
 def download_image(url, output_folder):  
     try:  
-        response = requests.get(url)  
+        response = requests.get(url, timeout=60)  
         response.raise_for_status()  
     except HTTPError as e:  
         print(f"Error while downloading {url}: {e}")  
@@ -58,7 +58,7 @@ def imshow(img, file_name = "tmp.jpg", caption='test'):
 def vis_image(json_obj, output_folder): 
     url = json_obj['url']  
     try:  
-        response = requests.get(url)  
+        response = requests.get(url, timeout=60)  
         response.raise_for_status()  
         
         file_name = os.path.basename(urlparse(url).path)  
