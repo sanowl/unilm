@@ -156,7 +156,7 @@ class FileAudioDataset(RawAudioDataset):
 
         skipped = 0
         with open(manifest_path, "r") as f:
-            self.root_dir = f.readline().strip()
+            self.root_dir = f.readline(5_000_000).strip()
             for line in f:
                 items = line.strip().split("\t")
                 assert len(items) == 2, line
