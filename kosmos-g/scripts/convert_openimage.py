@@ -7,7 +7,6 @@ from argparse import ArgumentParser
 from multiprocessing import Process
 
 import numpy as np
-import requests
 import torch
 import torch.nn.functional as F
 from PIL import Image
@@ -16,6 +15,7 @@ from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, Blip2Processor, Blip2ForConditionalGeneration, \
     CLIPSegProcessor, CLIPSegForImageSegmentation
+from security import safe_requests
 
 Image.MAX_IMAGE_PIXELS = 1000000000
 
@@ -246,7 +246,7 @@ class OpenImageDataset(Dataset):
     def __getitem__(self, idx):
         try:
             items = self.data[idx].split(',')
-            image = Image.open(requests.get(items[2], stream=True).raw).convert('RGB')
+            image = Image.open(safe_requests.get(items[2], stream=True).raw).convert('RGB')
             # caption
             width, height = image.size
             shortest_side = min(width, height)

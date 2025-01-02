@@ -7,6 +7,7 @@ from typing import Optional
 
 import requests
 from scorers import build_scorer
+from security import safe_requests
 
 
 class SimulSTEvaluationService(object):
@@ -40,7 +41,7 @@ class SimulSTEvaluationService(object):
         # end eval session
         url = f"{self.base_url}/result"
         try:
-            r = requests.get(url)
+            r = safe_requests.get(url)
             print("Scores: {}".format(r.json()))
             print("Evaluation session finished.")
         except Exception as e:
@@ -53,7 +54,7 @@ class SimulSTEvaluationService(object):
             for key in extra_params.keys():
                 params[key] = extra_params[key]
         try:
-            r = requests.get(url, params=params)
+            r = safe_requests.get(url, params=params)
         except Exception as e:
             print(f"Failed to request a source segment: {e}")
         return r.json()
@@ -70,7 +71,7 @@ class SimulSTEvaluationService(object):
     def corpus_info(self):
         url = f"{self.base_url}"
         try:
-            r = requests.get(url)
+            r = safe_requests.get(url)
         except Exception as e:
             print(f"Failed to request corpus information: {e}")
 

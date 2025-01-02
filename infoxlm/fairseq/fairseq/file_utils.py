@@ -19,6 +19,7 @@ import os
 import shutil
 import tarfile
 import tempfile
+from security import safe_requests
 
 
 try:
@@ -214,9 +215,8 @@ def s3_get(url, temp_file):
 
 
 def http_get(url, temp_file):
-    import requests
     from tqdm import tqdm
-    req = requests.get(url, stream=True)
+    req = safe_requests.get(url, stream=True)
     content_length = req.headers.get('Content-Length')
     total = int(content_length) if content_length is not None else None
     progress = tqdm(unit="B", total=total)

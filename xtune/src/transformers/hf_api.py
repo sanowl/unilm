@@ -21,6 +21,7 @@ from typing import List
 
 import requests
 from tqdm import tqdm
+from security import safe_requests
 
 
 ENDPOINT = "https://huggingface.co"
@@ -66,7 +67,7 @@ class HfApi:
         Call HF API to know "whoami"
         """
         path = "{}/api/whoami".format(self.endpoint)
-        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)})
+        r = safe_requests.get(path, headers={"authorization": "Bearer {}".format(token)})
         r.raise_for_status()
         d = r.json()
         return d["user"]
@@ -116,7 +117,7 @@ class HfApi:
         Call HF API to list all stored files for user.
         """
         path = "{}/api/listObjs".format(self.endpoint)
-        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)})
+        r = safe_requests.get(path, headers={"authorization": "Bearer {}".format(token)})
         r.raise_for_status()
         d = r.json()
         return [S3Obj(**x) for x in d]
