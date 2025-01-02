@@ -27,6 +27,7 @@ from filelock import FileLock
 from tqdm.auto import tqdm
 
 from . import __version__
+from security import safe_requests
 
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
@@ -359,7 +360,7 @@ def http_get(url, temp_file, proxies=None, resume_size=0, user_agent=None):
     headers = {"user-agent": ua}
     if resume_size > 0:
         headers["Range"] = "bytes=%d-" % (resume_size,)
-    response = requests.get(url, stream=True, proxies=proxies, headers=headers)
+    response = safe_requests.get(url, stream=True, proxies=proxies, headers=headers)
     if response.status_code == 416:  # Range not satisfiable
         return
     content_length = response.headers.get("Content-Length")
