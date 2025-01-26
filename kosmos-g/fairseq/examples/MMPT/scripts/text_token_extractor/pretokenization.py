@@ -11,6 +11,7 @@ import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from mmpt.processors import PKLJSONStrTextProcessor
 from mmpt.utils import ShardedTensor, recursive_config
+import fickling
 
 
 class TokenizerDataset(Dataset):
@@ -56,7 +57,7 @@ def numpify(shard_idx, video_ids, captions, target_dir, split, prefix, max_cap_l
 
 def sharding(config, out_file):
     with open(out_file, "rb") as fr:
-        captions = pickle.load(fr)
+        captions = fickling.load(fr)
     target_dir = config.target_dir
     prefix = os.path.basename(
                 os.path.splitext(config.caption_pkl_path)[0]
@@ -64,7 +65,7 @@ def sharding(config, out_file):
     for split in ["train", "val"]:
         target_path = os.path.join(target_dir, split + "_meta")
         with open(target_path + ".pkl", "rb") as fr:
-            meta = pickle.load(fr)
+            meta = fickling.load(fr)
         print("load meta", target_path, len(meta))
         for shard_id in meta:
             numpify(

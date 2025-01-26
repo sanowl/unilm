@@ -1,9 +1,9 @@
 import tqdm
 from torch.utils.data import Dataset
 from markuplmft.data.tag_utils import tags_dict
-import pickle
 import os
 import constants
+import fickling
 
 
 class SwdeFeature(object):
@@ -120,7 +120,7 @@ def get_swde_features(root_dir, vertical, website, tokenizer,
 
     filename = os.path.join(root_dir, f"{vertical}-{website}-{n_pages}.pickle")
     with open(filename, "rb") as f:
-        raw_data = pickle.load(f)
+        raw_data = fickling.load(f)
 
     features = []
 

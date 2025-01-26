@@ -115,6 +115,8 @@ setup(
         "torch",
         # for preprocessing
         "networkx == 1.11",
+        # for preprocessing
+        "fickling>=0.1.3,~=0.1.0",
     ],
     extras_require=extras,
     scripts=["transformers-cli"],

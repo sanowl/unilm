@@ -7,6 +7,7 @@ import pickle
 
 from . import retri
 from ..utils import get_local_rank
+import fickling
 
 
 class VectorPool(object):
@@ -131,7 +132,7 @@ class DistributedVectorPool(VectorPool):
             os.path.join(
                 self.out_dir, "video_id" + str(local_rank) + ".pkl"),
                 "rb") as fr:
-            video_ids = pickle.load(fr)
+            video_ids = fickling.load(fr)
         return hidden_states, video_ids
 
     def save(self):

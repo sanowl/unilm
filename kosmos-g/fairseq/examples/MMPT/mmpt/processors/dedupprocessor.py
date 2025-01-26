@@ -9,6 +9,7 @@ import pickle
 from tqdm import tqdm
 import os
 import numpy as np
+import fickling
 
 
 class CaptionDedupProcessor(object):
@@ -37,7 +38,7 @@ class CaptionDedupProcessor(object):
 
     def __init__(self, pkl_file):
         with open(pkl_file, "rb") as fd:
-            self.data = pickle.load(fd)
+            self.data = fickling.load(fd)
         self.stat = {
             "t_clip_len": [],
             "video_len": [],
