@@ -153,7 +153,7 @@ if __name__ == '__main__':
         # user has not specified any image - we use our own image
         print("Please use the `--image_path` argument to indicate the path of the image you wish to visualize.")
         print("Since no image path have been provided, we take the first image in our paper.")
-        response = requests.get("https://dl.fbaipublicfiles.com/dino/img.png")
+        response = requests.get("https://dl.fbaipublicfiles.com/dino/img.png", timeout=60)
         img = Image.open(BytesIO(response.content))
         img = img.convert('RGB')
     elif os.path.isfile(args.image_path):
