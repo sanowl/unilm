@@ -49,7 +49,7 @@ def process(args):
         with open(audio_manifest_root / f"{s}.audio.tsv") as f1, \
             open(audio_manifest_root / f"{s}.phn") as f2, \
             open(audio_manifest_root / f"{s}.km") as f3:
-            audio_root = f1.readline().strip()
+            audio_root = f1.readline(5_000_000).strip()
             audio_root = Path(audio_root)
             for audio_path, fa_phone, fa_unit in tqdm(zip(f1, f2, f3)):
                 record = True

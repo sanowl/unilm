@@ -271,14 +271,14 @@ class Dictionary(object):
             f.seek(offset)
             if offset > 0:
                 safe_readline(f)  # drop first incomplete line
-            line = f.readline()
+            line = f.readline(5_000_000)
             while line:
                 for word in tokenize(line):
                     counter.update([word])
                 counter.update([eos_word])
                 if f.tell() > end:
                     break
-                line = f.readline()
+                line = f.readline(5_000_000)
         return counter
 
     @staticmethod

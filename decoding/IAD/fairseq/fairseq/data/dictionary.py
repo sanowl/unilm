@@ -330,7 +330,7 @@ class Dictionary(object):
             f.seek(offset)
             if offset > 0:
                 safe_readline(f)  # drop first incomplete line
-            line = f.readline()
+            line = f.readline(5_000_000)
             while line:
                 for word in tokenize(line):
                     counter.update([word])
@@ -343,7 +343,7 @@ class Dictionary(object):
                 # check against the file size to prevent early exit.
                 if f.tell() > end and f.tell() < size:
                     break
-                line = f.readline()
+                line = f.readline(5_000_000)
         return counter
 
     @staticmethod
