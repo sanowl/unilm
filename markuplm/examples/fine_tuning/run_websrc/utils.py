@@ -13,6 +13,7 @@ from transformers.models.bert.tokenization_bert import BasicTokenizer, whitespac
 from torch.utils.data import Dataset
 from lxml import etree
 from markuplmft.data.tag_utils import tags_dict
+import lxml.etree
 
 logger = logging.getLogger(__name__)
 
@@ -210,7 +211,7 @@ def html_escape(html):
 
 def get_xpath4tokens(html_fn: str, unique_tids: set):
     xpath_map = {}
-    tree = etree.parse(html_fn, etree.HTMLParser())
+    tree = etree.parse(html_fn, etree.HTMLParser(), parser=lxml.etree.XMLParser(resolve_entities=False))
     nodes = tree.xpath('//*')
     for node in nodes:
         tid = node.attrib.get("tid")
