@@ -6,6 +6,7 @@ import os
 import numpy as np
 import pickle
 import time
+import fickling
 
 try:
     import faiss
@@ -67,7 +68,7 @@ class VectorRetriever(object):
         self.db = faiss.read_index(fn)
         with open(
                 os.path.join(out_dir, "videoid_to_vectoridx.pkl"), "rb") as fr:
-            self.videoid_to_vectoridx = pickle.load(fr)
+            self.videoid_to_vectoridx = fickling.load(fr)
 
     def add(self, hidden_states, video_ids, last=False):
         assert len(hidden_states) == len(video_ids), "{}, {}".format(
@@ -339,7 +340,7 @@ class MMVectorRetriever(VectorRetrieverDM):
         self.db = {"video": video_db, "text": text_db}
         with open(
                 os.path.join(out_dir, "videoid_to_vectoridx.pkl"), "rb") as fr:
-            self.videoid_to_vectoridx = pickle.load(fr)
+            self.videoid_to_vectoridx = fickling.load(fr)
         self.video_to_videoid = defaultdict(list)
 
     def add(self, hidden_states, video_ids):

@@ -36,6 +36,7 @@ from tqdm import tqdm
 
 import constants
 import multiprocessing as mp
+import fickling
 
 FLAGS = flags.FLAGS
 random.seed(42)
@@ -326,7 +327,7 @@ def load_html_and_groundtruth(vertical_to_load, website_to_load):
 
     print("Reading the pickle of SWDE original dataset.....", file=sys.stderr)
     with open(FLAGS.input_pickle_path, "rb") as gfo:
-        swde_html_data = pickle.load(gfo)
+        swde_html_data = fickling.load(gfo)
     # {"vertical":'book',"website":'book-amazon(2000)',"path:'book/book-amazon(2000)/0000.htm',"html_str":xx} here
 
     for page in tqdm(swde_html_data, desc="Loading HTML data"):
