@@ -56,7 +56,7 @@ class HfApi:
             requests.exceptions.HTTPError if credentials are invalid
         """
         path = "{}/api/login".format(self.endpoint)
-        r = requests.post(path, json={"username": username, "password": password})
+        r = requests.post(path, json={"username": username, "password": password}, timeout=60)
         r.raise_for_status()
         d = r.json()
         return d["token"]
@@ -66,7 +66,7 @@ class HfApi:
         Call HF API to know "whoami"
         """
         path = "{}/api/whoami".format(self.endpoint)
-        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)})
+        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)}, timeout=60)
         r.raise_for_status()
         d = r.json()
         return d["user"]
@@ -76,7 +76,7 @@ class HfApi:
         Call HF API to log out.
         """
         path = "{}/api/logout".format(self.endpoint)
-        r = requests.post(path, headers={"authorization": "Bearer {}".format(token)})
+        r = requests.post(path, headers={"authorization": "Bearer {}".format(token)}, timeout=60)
         r.raise_for_status()
 
     def presign(self, token: str, filename: str) -> PresignedUrl:
@@ -84,7 +84,7 @@ class HfApi:
         Call HF API to get a presigned url to upload `filename` to S3.
         """
         path = "{}/api/presign".format(self.endpoint)
-        r = requests.post(path, headers={"authorization": "Bearer {}".format(token)}, json={"filename": filename})
+        r = requests.post(path, headers={"authorization": "Bearer {}".format(token)}, json={"filename": filename}, timeout=60)
         r.raise_for_status()
         d = r.json()
         return PresignedUrl(**d)
@@ -106,7 +106,7 @@ class HfApi:
             pf = TqdmProgressFileReader(f)
             data = f if pf.total_size > 0 else ""
 
-            r = requests.put(urls.write, data=data, headers={"content-type": urls.type})
+            r = requests.put(urls.write, data=data, headers={"content-type": urls.type}, timeout=60)
             r.raise_for_status()
             pf.close()
         return urls.access
@@ -116,7 +116,7 @@ class HfApi:
         Call HF API to list all stored files for user.
         """
         path = "{}/api/listObjs".format(self.endpoint)
-        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)})
+        r = requests.get(path, headers={"authorization": "Bearer {}".format(token)}, timeout=60)
         r.raise_for_status()
         d = r.json()
         return [S3Obj(**x) for x in d]
@@ -126,7 +126,7 @@ class HfApi:
         Call HF API to delete a file stored by user
         """
         path = "{}/api/deleteObj".format(self.endpoint)
-        r = requests.delete(path, headers={"authorization": "Bearer {}".format(token)}, json={"filename": filename})
+        r = requests.delete(path, headers={"authorization": "Bearer {}".format(token)}, json={"filename": filename}, timeout=60)
         r.raise_for_status()
 
 
