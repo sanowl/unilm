@@ -6,6 +6,7 @@ import eval_lm
 import preprocess
 from contextlib import redirect_stdout
 import math
+from security import safe_command
 
 
 def reprocess(fle):
@@ -595,7 +596,7 @@ def lm_scoring(preprocess_directory, bpe_status, gen_output, pre_gen,
         bpe_src_param = ["-c", cur_lm_bpe_code,
                          "--input", rescore_file+target_lang,
                          "--output", rescore_bpe+target_lang]
-        subprocess.call(["python",
+        safe_command.run(subprocess.call, ["python",
                          os.path.join(os.path.dirname(__file__),
                                       "subword-nmt/subword_nmt/apply_bpe.py")] + bpe_src_param,
                         shell=False)
