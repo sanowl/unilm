@@ -1,4 +1,3 @@
-import requests
 import os
 import multiprocessing as mp
 from io import BytesIO
@@ -7,6 +6,7 @@ import PIL
 from PIL import Image
 import pickle
 import sys
+from security import safe_requests
 
 
 def grab(line):
@@ -26,7 +26,7 @@ def grab(line):
 
     # Let's not crash if anythign weird happens
     try:
-        dat = requests.get(url, timeout=20)
+        dat = safe_requests.get(url, timeout=20)
         if dat.status_code != 200:
             print("404 file", url)
             return

@@ -1,6 +1,5 @@
 import json  
 import os  
-import requests  
 from urllib.parse import urlparse  
 from requests.exceptions import HTTPError  
 
@@ -15,6 +14,8 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pylab
+from security import safe_requests
+
 pylab.rcParams['figure.figsize'] = 20, 12
 
 import cv2
@@ -31,7 +32,7 @@ def download_images_from_jsonl(jsonl_path, output_folder):
   
 def download_image(url, output_folder):  
     try:  
-        response = requests.get(url)  
+        response = safe_requests.get(url)  
         response.raise_for_status()  
     except HTTPError as e:  
         print(f"Error while downloading {url}: {e}")  
@@ -58,7 +59,7 @@ def imshow(img, file_name = "tmp.jpg", caption='test'):
 def vis_image(json_obj, output_folder): 
     url = json_obj['url']  
     try:  
-        response = requests.get(url)  
+        response = safe_requests.get(url)  
         response.raise_for_status()  
         
         file_name = os.path.basename(urlparse(url).path)  
