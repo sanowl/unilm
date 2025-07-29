@@ -15,6 +15,7 @@ import pickle
 # from transformers.tokenization_bert import BertTokenizer
 from transformers import BertTokenizer
 import argparse
+import lxml.etree
 
 tags_dict = {'a': 0, 'abbr': 1, 'acronym': 2, 'address': 3, 'altGlyph': 4, 'altGlyphDef': 5, 'altGlyphItem': 6,
              'animate': 7, 'animateColor': 8, 'animateMotion': 9, 'animateTransform': 10, 'applet': 11, 'area': 12,
@@ -201,7 +202,7 @@ class StrucDataset(Dataset):
 
 def get_xpath4tokens(html_fn: str, unique_tids: set):
     xpath_map = {}
-    tree = etree.parse(html_fn, etree.HTMLParser())
+    tree = etree.parse(html_fn, etree.HTMLParser(), parser=lxml.etree.XMLParser(resolve_entities=False))
     nodes = tree.xpath('//*')
     for node in nodes:
         tid = node.attrib.get("tid")
