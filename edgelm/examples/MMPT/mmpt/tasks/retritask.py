@@ -23,6 +23,7 @@ from .task import Task
 from ..modules import vectorpool
 from ..evaluators.predictor import Predictor
 from ..utils import set_seed, get_local_rank, get_world_size
+import fickling
 
 
 class RetriTask(Task):
@@ -144,7 +145,7 @@ class VideoRetriTask(RetriTask):
                 out_dir,
                 "batched_e" + str(epoch) + "_videos" + str(local_rank) + ".pkl")
             with open(fn, "rb") as fr:
-                batched_videos.extend(pickle.load(fr))
+                batched_videos.extend(fickling.load(fr))
         print(
             "[INFO] batched_videos",
             len(batched_videos), len(batched_videos[0]))

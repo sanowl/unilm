@@ -6,7 +6,6 @@ Processors for all downstream (ds) tasks.
 
 import json
 import os
-import pickle
 import random
 import math
 import numpy as np
@@ -23,6 +22,7 @@ from .processor import (
 )
 
 from .how2processor import TextGenerationProcessor
+import fickling
 
 
 # ------------- A General Aligner for all downstream tasks-----------------
@@ -281,7 +281,7 @@ class YoucookMetaProcessor(MetaProcessor):
         vfeat_dir = config.vfeat_dir
         print(self._get_split_path(config))
         with open(self._get_split_path(config), "rb") as fd:
-            data = pickle.load(fd)
+            data = fickling.load(fd)
             all_valid_video_ids = set(
                 [os.path.splitext(fn)[0] for fn in os.listdir(vfeat_dir)]
             )
