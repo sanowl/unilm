@@ -11,10 +11,10 @@ from bs4 import BeautifulSoup as bs
 from torch.utils.data import Dataset
 import networkx as nx
 from lxml import etree
-import pickle
 # from transformers.tokenization_bert import BertTokenizer
 from transformers import BertTokenizer
 import argparse
+import fickling
 
 tags_dict = {'a': 0, 'abbr': 1, 'acronym': 2, 'address': 3, 'altGlyph': 4, 'altGlyphDef': 5, 'altGlyphItem': 6,
              'animate': 7, 'animateColor': 8, 'animateMotion': 9, 'animateTransform': 10, 'applet': 11, 'area': 12,
@@ -120,7 +120,7 @@ class StrucDataset(Dataset):
             graph_name = self.all_graph_names[index]
             token_to_tag = self.all_token_to_tag[index]
             with open(graph_name,"rb") as f:
-                node_pairs_lengths = pickle.load(f)
+                node_pairs_lengths = fickling.load(f)
 
             # node_pairs_lengths = dict(nx.all_pairs_shortest_path_length(graph))
 
